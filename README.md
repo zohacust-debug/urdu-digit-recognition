@@ -18,7 +18,7 @@ A CNN-based web application that recognizes handwritten Urdu digits (0–9) from
 
         ## Demo Screenshots
 
-        ![App Screenshot](Screenshot_2026-01-04_001315.png)
+        ![App Screenshot](test_images/app_screenshot.png)
 
         ---
 
