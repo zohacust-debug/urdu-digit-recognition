@@ -1,0 +1,5 @@
+Flask==2.3.5
+tensorflow==2.14.0
+numpy
+opencv-python
+pillow

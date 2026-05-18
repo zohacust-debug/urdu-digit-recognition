@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8" />
+  <title>اردو ہندسہ پہچان</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="sidebar">
+    <h2>اردو ہندسہ پہچان</h2>
+    <ul>
+      <li class="active" data-module="upload-module">تصویر اپلوڈ کریں</li>
+      <li data-module="canvas-module">ہندسہ لکھیں</li>
+      <li data-module="multi-digit-module">متعدد ہندسے پہچان</li>
+    </ul>
+  </div>
+
+  <div class="main">
+
+    <!-- Upload Module -->
+    <div id="upload-module" class="module active">
+      <h1>تصویر اپلوڈ کریں</h1>
+
+      <div class="card">
+        <form method="POST" enctype="multipart/form-data">
+          <input type="file" name="file" accept=".png,.jpg,.jpeg" required>
+          <button type="submit">پیشگوئی کریں</button>
+        </form>
+
+        {% if error %}
+          <div class="error">{{ error }}</div>
+        {% endif %}
+
+        {% if prediction is not none %}
+          <div class="result">
+            <h2>پیشگوئی شدہ ہندسہ: <span>{{ prediction }}</span></h2>
+            {% if confidence is not none %}
+              <p class="muted">Confidence: {{ "%.2f"|format(confidence*100) }}%</p>
+            {% endif %}
+          </div>
+
+          {% if preview %}
+            <div class="preview-wrap">
+              <h3>Processed Preview</h3>
+              <img src="{{ preview }}" alt="preview">
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Canvas Module -->
+    <div id="canvas-module" class="module">
+      <h1>ہندسہ یہاں لکھیں</h1>
+
+      <div class="card">
+        <canvas id="draw-canvas" width="220" height="220"></canvas>
+
+        <div class="canvas-buttons">
+          <button type="button" id="clear-btn">صاف کریں</button>
+          <button type="button" id="predict-btn">پیشگوئی کریں</button>
+        </div>
+
+        <div id="canvas-result" class="result"></div>
+
+        <div id="canvas-preview-wrap" class="preview-wrap hidden">
+          <h3>Processed Preview</h3>
+          <img id="canvas-preview" alt="preview">
+        </div>
+      </div>
+    </div>
+
+    <!-- Multi-Digit Module -->
+    <div id="multi-digit-module" class="module">
+      <h1>متعدد ہندسے پہچان</h1>
+
+      <div class="card">
+        <p class="muted">ایک تصویر اپلوڈ کریں جس میں کئی ہندسے ہوں۔</p>
+
+        <form id="multi-digit-form" enctype="multipart/form-data">
+          <input type="file" name="file" accept=".png,.jpg,.jpeg" required>
+          <button type="submit">پیشگوئی کریں</button>
+        </form>
+
+        <div id="multi-digit-result" class="result"></div>
+
+        <div id="multi-preview-wrap" class="preview-wrap hidden">
+          <h3>Segmentation Preview</h3>
+          <img id="multi-preview" alt="preview">
+        </div>
+
+        <div id="multi-details-wrap" class="preview-wrap"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
