@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 
 import numpy as np
 import cv2
-from PIL import Image
+from PIL import Imageh
 import io, base64, os
 
 
@@ -19,7 +19,7 @@ app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5MB
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
-MODEL_PATH = os.environ.get("URDU_MODEL_PATH", r"D:\urdu_digit_recognition\uploads\urdu_cnn_model.h5")
+MODEL_PATH = os.environ.get("URDU_MODEL_PATH", os.path.join(os.path.dirname(__file__), "urdu_cnn_model.h5"))
 model = load_model(MODEL_PATH, compile=False)
 
 TARGET_SIZE = 128
